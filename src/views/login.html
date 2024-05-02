@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Productos</title>
+
+    <link rel="stylesheet" href="https://bootswatch.com/5/solar/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
+        </script>
+      <script src="https://kit.fontawesome.com/a3c354fd86.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row justify-content-center align-items-center" style="height: 100vh;">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <span style="color: aliceblue;">¡Bienvenido!</span> <br>
+                        <span class="text-muted font-weight-normal mb-4">Ingresa tus credenciales para
+                            iniciar sesión</span>
+
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="correoLogin">Correo Electrónico</label>
+                                <input type="email" class="form-control" id="correoLogin"
+                                    placeholder="Ingresa tu Correo">
+                            </div>
+                            <div class="form-group">
+                                <label for="passwordLogin">Contraseña</label>
+                                <input type="password" class="form-control" id="passwordLogin"
+                                    placeholder="Ingresa tu Contraseña">
+                            </div>
+                            <br>
+                            <button id="btnLogin" onclick="login()" type="button" class="btn btn-primary btn-block">Iniciar Sesión</button>
+                        </form>
+                        <br>
+                        <h6 id="text-error" style="color: red;"></h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- JS personales -->
+    <script src="./js/login.js"></script>
+
+</body>
+
+</html>
