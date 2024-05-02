@@ -12,7 +12,6 @@ const login = () => {
         setTimeout(errorLogin, 300);
     }
 }
-
 const errorLogin = () => {
     
     textErrorElement.innerText = 'Credenciales erróneas. Vuelve a Intentarlo.';
