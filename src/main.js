@@ -184,7 +184,11 @@ function validateLogout(confirm) {
     store.delete('name');
     store.delete('email');
     store.delete('permissions');
-
+    
+    //store.delete('ventas');
+    //store.delete('categorias');
+    //store.delete('productos');
+    
     createWindow();
     loginWindow.show();
     window.close();

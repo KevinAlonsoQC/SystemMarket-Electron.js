@@ -11,7 +11,8 @@
   <link rel="stylesheet" href="https://bootswatch.com/5/solar/bootstrap.min.css">
   <link rel="stylesheet" href="./css/style.css">
   <!--Jquery-->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <!--Icons-->
   <script src="https://kit.fontawesome.com/a3c354fd86.js" crossorigin="anonymous"></script>
 
@@ -55,7 +56,7 @@
         </li>
         <hr>
         <li>
-          <a href="" id="refreshButton">
+          <a href="" id="btnLogout">
             <i class="fa fa-sign-out-alt fa-lg"></i> Cerrar Sesión
           </a>
         </li>
@@ -67,11 +68,15 @@
   <div class="container" id="main">
     <div class="row">
       <div class="col-md-12">
-        <h4 class="text-center">Visualiza los productos de tu tienda. Puedes añadir, modificar y eliminar a tu gusto.</h4>
+        <h4 class="text-center">Visualiza los productos de tu tienda. Puedes añadir, modificar y eliminar a tu gusto.
+        </h4>
       </div>
       <div class="col-md-12">
         <div class="container">
           <h1 class="mt-4 mb-3">Productos</h1>
+          <div class="text-center"> <!-- Aquí envolvemos el botón en un div centrado -->
+            <a href="./agregarProducto.html" type="button" class="btn btn-success">Añadir Nuevo Producto</a>
+          </div>
           <table id="productos" class="display" width="100%"></table>
         </div>
       </div>

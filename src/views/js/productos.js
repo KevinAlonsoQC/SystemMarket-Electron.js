@@ -23,8 +23,8 @@ class Page {
             refreshButton.addEventListener('click', this.refresh.bind(this));
         }
 
-        //let btnLogout = this.get('#btnLogout');
-        //btnLogout.addEventListener('click', this.logout);
+        let btnLogout = this.get('#btnLogout');
+        btnLogout.addEventListener('click', this.logout);
     }
 
     loadDataUser() {
@@ -48,7 +48,10 @@ class Page {
                             producto.nombre,
                             montoFormateado,
                             producto.codigo_barra,
-                            producto.categoria
+                            producto.categoria,
+                            '<button type="button" class="btn btn-primary">Modificar</button>',
+                            '<button type="button" class="btn btn-warning">Eliminar</button>'
+
                         ]);
                     });
 
@@ -81,6 +84,10 @@ class Page {
                                 { title: 'Precio' },
                                 { title: 'Código de Barra' },
                                 { title: 'Categoría' },
+                                { title: 'Opciones' },
+                                { title: 'Opciones' },
+
+
                             ],
                             data: dataSet
                         });

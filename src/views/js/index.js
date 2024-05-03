@@ -23,8 +23,8 @@ class Page {
       refreshButton.addEventListener('click', this.refresh.bind(this));
     }
 
-    //let btnLogout = this.get('#btnLogout');
-    //btnLogout.addEventListener('click', this.logout);
+    let btnLogout = this.get('#btnLogout');
+    btnLogout.addEventListener('click', this.logout);
   }
 
   loadDataUser() {

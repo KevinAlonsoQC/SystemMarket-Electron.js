@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Productos</title>
+
+  <!--Styles and Bootstrap-->
+  <link rel="stylesheet" href="https://bootswatch.com/5/solar/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <!--Jquery-->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <!--Icons-->
+  <script src="https://kit.fontawesome.com/a3c354fd86.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+  <div class="nav-side-menu">
+    <div class="brand">Botillería</div>
+    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+    <div class="menu-list">
+      <ul id="menu-content" class="menu-content collapse out">
+        <li>
+          <a href="#">
+            <i class="fa fa-user-cog fa-lg"></i> Mi Cuenta
+          </a>
+        </li>
+        <li>
+          <a href="./index.html" id="refreshButton">
+            <i class="fa fa-dashboard fa-lg"></i> Inicio
+          </a>
+        </li>
+        <hr>
+        <li>
+          <a href="./ProductoMenu.html">
+            <i class="fa fa-wine-bottle fa-lg"></i> Productos
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="fa fa-money fa-lg"></i> Vender
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="fa fa-shop fa-lg"></i> Ventas Realizadas
+          </a>
+        </li>
+        <hr>
+        <li>
+          <a href="" id="btnLogout">
+            <i class="fa fa-sign-out-alt fa-lg"></i> Cerrar Sesión
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="container" id="main">
+    <div class="row">
+      <div class="col-md-12">
+        <h4 class="text-center">Escanea para añadir tu producto.</h4>
+      </div>
+      <div class="col-md-12">
+        <div class="container">
+          <div class="col-md-4">
+            <fieldset>
+              <label class="form-label mt-4" for="barcodeInput">Escanea o Escribe el código de barras</label>
+              <input class="form-control" id="barcodeInput" placeholder="Código de Barras" type="text">
+            </fieldset>
+          </div>
+          <button id="buscar" onclick="buscarProducto()" class="btn btn-primary">Buscar Producto</button>
+          <button id="nobuscar" onclick="sinBuscar()" class="btn btn-warning">Continuar Sin Escanear</button>
+
+          <div class="col-md-12 mx-auto d-flex flex-wrap justify-content-between">
+            <div class="col-md-4">
+              <fieldset>
+                <label class="form-label mt-4" for="productNameInput">Nombre del Producto</label>
+                <input class="form-control" id="productNameInput" placeholder="Nombre del Producto" type="text"
+                  disabled>
+              </fieldset>
+            </div>
+            <div class="col-md-4">
+              <fieldset>
+                <label class="form-label mt-4" for="productPriceInput">Precio del Producto</label>
+                <input class="form-control" id="productPriceInput" placeholder="Precio del Producto" type="text"
+                  disabled>
+              </fieldset>
+            </div>
+            <div class="col-md-4">
+              <fieldset>
+                <label class="form-label mt-4" for="productBarcodeInput">Código de Barras del Producto</label>
+                <input class="form-control" id="productBarcodeInput" placeholder="Código de Barras del Producto"
+                  type="text" disabled>
+              </fieldset>
+            </div>
+            <div class="col-md-4">
+              <fieldset>
+                <label class="form-label mt-4" for="productCategorySelect">Categoría del Producto</label>
+                <select class="form-select" id="productCategorySelect" disabled>
+                </select>
+              </fieldset>
+            </div>
+
+            <div class="col-md-4">
+              <fieldset>
+                <label class="form-label mt-4" for="productImageInput">Imagen del Producto</label><br>
+                <img class="img-fluid" id="productImagePreview" style="width: 150px; height: 150px;">
+                <input class="form-control" id="productImageInput" placeholder="URL de la Imagen del Producto"
+                  type="text" disabled>
+              </fieldset>
+            </div>
+          </div>
+
+          <button type="button" class="btn btn-success" onclick="agregarProducto()">Añadir Producto</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="./js/agregarProducto.js"></script>
+
+</body>
+
+</html>
