@@ -6,21 +6,21 @@ const ipc = {
         'send': [
             'login',
             'logout',
-            'invitado',
-            'addBook',
-            'updateBook',
-            'deleteBook',
-            'consultBook',
-            'consultCarreras'
+            'insertProducto',
+            //'addBook',
+            //'updateBook',
+            //'deleteBook',
+            //'consultBook',
+            //'consultCarreras'
         ],
         'sendReceive': [
-            'getCarreras',
+            //'getCarreras',
             'getUserData',
-            'getBooks',
-            'getBook',
-            'confirmAddBook',
-            'confirmUpdateBook',
-            'confirmDeleteBook'
+            //'getBooks',
+            //'getBook',
+            //'confirmAddBook',
+            //'confirmUpdateBook',
+            //'confirmDeleteBook'
         ]
     }
 };

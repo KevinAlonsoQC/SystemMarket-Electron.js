@@ -7,11 +7,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Productos</title>
 
+    <!--Styles and Bootstrap-->
     <link rel="stylesheet" href="https://bootswatch.com/5/solar/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <!--Jquery-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
-        </script>
-      <script src="https://kit.fontawesome.com/a3c354fd86.js" crossorigin="anonymous"></script>
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!--Icons-->
+    <script src="https://kit.fontawesome.com/a3c354fd86.js" crossorigin="anonymous"></script>
+
+    <!-- DataTabkes-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css">
+    <!--Alerts Customize-->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </head>
 
@@ -39,7 +47,8 @@
                                     placeholder="Ingresa tu Contraseña">
                             </div>
                             <br>
-                            <button id="btnLogin" onclick="login()" type="button" class="btn btn-primary btn-block">Iniciar Sesión</button>
+                            <button id="btnLogin" onclick="login()" type="button"
+                                class="btn btn-primary btn-block">Iniciar Sesión</button>
                         </form>
                         <br>
                         <h6 id="text-error" style="color: red;"></h6>

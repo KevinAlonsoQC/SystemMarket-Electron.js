@@ -9,7 +9,7 @@ const db = require('./connection.js');
 let window;
 let loginWindow;
 
-if(process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'production') {
   require('electron-reload')(__dirname, {
     electron: path.join(__dirname, '../node_modules', '.bin', 'electron')
   });
@@ -91,13 +91,13 @@ electronIpcMain.on('login', (event, data) => {
 // Consulta para obtener todos los datos de la tabla producto
 function getProductos() {
   const sql = 'SELECT * FROM producto';
-  
+
   db.query(sql, (error, results, fields) => {
     if (error) {
       console.log(error);
       return;
     }
-    
+
     // Almacena los detalles de venta en un array
     const Productos = results.map(detalle => ({
       nombre: detalle.nombre,
@@ -112,22 +112,22 @@ function getProductos() {
 };
 
 // Consulta para obtener todos los datos de la tabla venta
-function getVentas (){
+function getVentas() {
   const sql = 'SELECT * FROM venta';
-  
+
   db.query(sql, (error, results, fields) => {
     if (error) {
       console.log(error);
       return;
     }
-    
+
     // Almacena los detalles de venta en un array
     const Ventas = results.map(detalle => ({
       fecha: detalle.fecha,
       vendedor: detalle.vendedor,
       monto: detalle.monto_total
     }));
-    
+
     // Almacena el array de detalles de venta en el store
     store.set('ventas', Ventas);
   });
@@ -137,7 +137,7 @@ function getVentas (){
 // Consulta para obtener todos los datos de la tabla detalle_venta
 function getCategorias() {
   const sql = 'SELECT * FROM categoria';
-  
+
   db.query(sql, (error, results, fields) => {
     if (error) {
       console.log(error);
@@ -165,7 +165,7 @@ function validateLogin(data) {
       store.set('name', results[0].nombre);
       store.set('email', results[0].email);
       store.set('permissions', results[0].permiso);
-      
+
       createWindowDashboard();
       loginWindow.close();
       window.loadFile(path.join(__dirname, 'views/index.html'));
@@ -180,31 +180,31 @@ electronIpcMain.on('logout', (event, confirm) => {
 });
 
 function validateLogout(confirm) {
+  console.log(confirm);
   if (confirm == 'confirm-logout') {
     store.delete('name');
     store.delete('email');
     store.delete('permissions');
-    
+
     //store.delete('ventas');
     //store.delete('categorias');
     //store.delete('productos');
-    
+
     createWindow();
     loginWindow.show();
     window.close();
   }
 }
 
-
 electronIpcMain.handle('getUserData', (event) => {
   getCategorias();
   getProductos();
   getVentas();
-  
-  const data = { 
+
+  const data = {
     name: store.get('name'),
-    email: store.get('email'), 
-    permissions: store.get('permissions'), 
+    email: store.get('email'),
+    permissions: store.get('permissions'),
     //Anexos al usuario. Data
     categorias: store.get('categorias'),
     ventas: store.get('ventas'),
@@ -213,6 +213,20 @@ electronIpcMain.handle('getUserData', (event) => {
   return data;
 });
 
+
+electronIpcMain.on('insertProducto', (event, data) => {
+  addProducto(data);
+});
+
+function addProducto(data) {
+  const sql = 'INSERT INTO producto (nombre, precio, codigo_barra, categoria, img) VALUES (?, ?, ?, ?, ?)';
+
+  db.query(sql, [data.nombre, data.precio, data.codigo_barra, data.categoria, data.img], (error) => {
+    if (error) {
+      console.log(error);
+    }
+  });
+};
 
 // Menu Template
 const templateMenu = [
