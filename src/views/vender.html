@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Productos</title>
+
+    <!--Styles and Bootstrap-->
+    <link rel="stylesheet" href="https://bootswatch.com/5/solar/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <!--Jquery-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!--Icons-->
+    <script src="https://kit.fontawesome.com/a3c354fd86.js" crossorigin="anonymous"></script>
+
+    <!-- DataTabkes-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css">
+    <!--Alerts Customize-->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+</head>
+
+<body>
+
+    <div class="nav-side-menu">
+        <div class="brand">Botillería</div>
+        <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+        <div class="menu-list">
+            <ul id="menu-content" class="menu-content collapse out">
+                <li>
+                    <a onclick="goToPage('mi_cuenta')"  id="mi_cuenta">
+                        <i class="fa fa-user-cog fa-lg"></i> Mi Cuenta
+                    </a>
+                </li>
+                <li>
+                    <a onclick="goToPage('index')"  id="inicio">
+                        <i class="fa fa-dashboard fa-lg"></i> Inicio
+                    </a>
+                </li>
+                <hr>
+                <li>
+                    <a onclick="goToPage('ProductoMenu')"  id="productos">
+                        <i class="fa fa-wine-bottle fa-lg"></i> Productos
+                    </a>
+                </li>
+                <li>
+                    <a onclick="goToPage('vender')"  id="vender">
+                        <i class="fa fa-money fa-lg"></i> Vender
+                    </a>
+                </li>
+                <li>
+                    <a onclick="goToPage('ventas_realizadas')" id="ventas_realizadas">
+                        <i class="fa fa-shop fa-lg"></i> Ventas Realizadas
+                    </a>
+                </li>
+                <hr>
+                <li>
+                    <a id="btnLogout">
+                        <i class="fa fa-sign-out-alt fa-lg"></i> Cerrar Sesión
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container" id="main">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="container">
+                    <h1 class="mb-3 text-center"> <u>Boleta de Venta</u></h1>
+                    <div class="col-md-4 mx-auto">
+                        <fieldset>
+                            <label class="form-label mt-8 text-center" for="barcodeInput">Escanea o Escribe el código de
+                                barras para añadirlo a la boleta</label>
+                            <input class="form-control" id="barcodeInput" placeholder="Código de Barras" type="text"
+                                autofocus>
+                        </fieldset>
+                    </div>
+                    <button type="button" class="btn btn-outline-primary">Generar Boleta</button>
+                    <br><br>
+                    <div class="col-md-5 mx-auto d-flex flex-wrap" style="background-color: #fff; color: black; margin-bottom: 50px;">
+                        <p class="ms-3 p-1">Vendedor: <span id="vendedor"></span> </p>
+                        <p class="ms-3 p-1">Fecha: <span id="fecha"></span> </p>
+                        <p class="ms-3 p-1">Nro. Boleta: <span id="nro_boleta"></span> </p>
+                        <br>
+                        
+                        <table id="boleta" class="text-center display" width="100%" style="background-color: #dadada;">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Precio</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productos_boleta">
+
+                            </tbody>
+                        </table>
+
+                        <p class="ms-3 p-1" style="margin-top: 50px;">Monto Total: <span id="monto_total"></span> </p>
+                    </div>
+                    <button type="button" class="btn btn-outline-primary">Generar Boleta</button>
+                    <br><br><br>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.5/js/dataTables.min.js"></script>
+    <script src="./js/vender.js"></script>
+
+</body>
+
+</html>

@@ -107,6 +107,21 @@ class Page {
   }
 
   logout() {
-    window.ipcRender.send('logout', 'confirm-logout');
-  }
+    swal({
+        title: "Cerrar Sesión",
+        text: "¿Estás seguro de cerrar sesión?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+        buttons: ["Si, cerrar sesión", "No y Volver"],
+    }).then((willDelete) => {
+        if (willDelete) {
+            swal("Continúa con la sesión", {
+                icon: "success",
+            });
+        } else {
+            window.ipcRender.send('logout', 'confirm-logout');
+        }
+    });
+}
 }

@@ -103,7 +103,8 @@ function getProductos() {
       nombre: detalle.nombre,
       precio: detalle.precio,
       codigo_barra: detalle.codigo_barra,
-      categoria: detalle.categoria
+      categoria: detalle.categoria,
+      img: detalle.img
     }));
 
     // Almacena el array de productos de venta en el store
@@ -213,6 +214,28 @@ electronIpcMain.handle('getUserData', (event) => {
   return data;
 });
 
+electronIpcMain.on('saveCarrito', (event, data) => {
+  if (store.get('carrito')){
+    store.delete('carrito');
+  }
+  store.set('carrito', data);
+  console.log('Carrito Guardado')
+  console.log(data)
+});
+
+electronIpcMain.on('deleteCarrito', (event, data) => {
+  console.log('Carrito borrado')
+  store.delete('carrito');
+  console.log(store.get('carrito'))
+});
+
+electronIpcMain.handle('getCarrito', (event) => {
+  const data = {
+    carrito: store.get('carrito'),
+  };
+  console.log('Carrito llamado', data.carrito)
+  return data;
+});
 
 electronIpcMain.on('insertProducto', (event, data) => {
   addProducto(data);
@@ -224,9 +247,44 @@ function addProducto(data) {
   db.query(sql, [data.nombre, data.precio, data.codigo_barra, data.categoria, data.img], (error) => {
     if (error) {
       console.log(error);
+    }else{
+      console.log('agregado en el producto', data)
     }
   });
 };
+
+electronIpcMain.on('updateProducto', (event, data) => {
+  updateProducto(data);
+});
+
+function updateProducto(data) {
+  const sql = 'UPDATE producto SET nombre = ?, precio = ?, categoria = ?, img = ? WHERE codigo_barra = ?';
+  
+  db.query(sql, [data.nombre, data.precio, data.categoria, data.img, data.codigo_barra], (error) => {
+    if (error) {
+      console.log(error);
+    }else{
+      console.log('Update en el producto', data)
+    }
+    
+  });
+}
+
+electronIpcMain.on('deleteProducto', (event, data) => {
+  deleteProducto(data);
+});
+
+function deleteProducto(data) {
+  const sql = 'DELETE FROM producto WHERE codigo_barra = ?';
+  db.query(sql, [data.codigo_barra], (error) => {
+    if (error) {
+      console.log(error);
+    }else{
+      console.log('borrado en el producto', data)
+    }
+  });
+}
+
 
 // Menu Template
 const templateMenu = [

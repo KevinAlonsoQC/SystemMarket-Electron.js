@@ -3,24 +3,18 @@ const ipcRender = require('electron').ipcRenderer;
 
 const ipc = {
     'render': {
-        'send': [
+        'send': [ //Esto me envía datos a mi electron.js
             'login',
             'logout',
             'insertProducto',
-            //'addBook',
-            //'updateBook',
-            //'deleteBook',
-            //'consultBook',
-            //'consultCarreras'
+            'updateProducto',
+            'deleteProducto',
+            'saveCarrito',
+            'deleteCarrito',
         ],
-        'sendReceive': [
-            //'getCarreras',
+        'sendReceive': [ //Esto me trae datos a mi HTML
             'getUserData',
-            //'getBooks',
-            //'getBook',
-            //'confirmAddBook',
-            //'confirmUpdateBook',
-            //'confirmDeleteBook'
+            'getCarrito',
         ]
     }
 };

@@ -32,7 +32,6 @@ class Page {
     }
 
     loadDataUser() {
-        let profileName = document.getElementById('nombreUser');
         window.ipcRender.invoke('getUserData').then((result) => {
             data = result
             if (result.permissions == 'admin') {
@@ -57,35 +56,51 @@ class Page {
     }
 
     logout() {
-        window.ipcRender.send('logout', 'confirm-logout');
+        swal({
+            title: "Cerrar Sesión",
+            text: "¿Estás seguro de cerrar sesión?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            buttons: ["Si, cerrar sesión", "No y Volver"],
+        }).then((willDelete) => {
+            if (willDelete) {
+                swal("Continúa con la sesión", {
+                    icon: "success",
+                });
+            } else {
+                window.ipcRender.send('logout', 'confirm-logout');
+            }
+        });
     }
-    
+
     agregarProducto() {
+        const agregar = true;
         const productName = document.getElementById('productNameInput').value;
         const productPrice = document.getElementById('productPriceInput').value;
         const productBarcode = document.getElementById('productBarcodeInput').value;
         const productCategory = document.getElementById('productCategorySelect').value;
         const productImg = document.getElementById('productImageInput').value;
 
-        if (productName == ''){
+        if (productName == '') {
             swal("Algo hiciste mal :(", "No has ingresado un nombre al producto", "error");
             return;
         }
-    
+
         // Verificar que el precio sea numérico
         if (productPrice == '') {
             swal("Algo hiciste mal :(", "No has ingresado un precio", "error");
             return;
-        }else if(isNaN(productPrice)){
+        } else if (isNaN(productPrice)) {
             swal("Algo hiciste mal :(", "No has ingresado un valor numérico", "error");
             return;
         }
-    
-        if (productBarcode == ''){
+
+        if (productBarcode == '') {
             swal("Algo hiciste mal :(", "No has ingresado un código de barra para el producto", "error");
             return;
         }
-    
+
         // Verificar que la categoría del producto coincida con alguna de las categorías obtenidas del invoke
         const categoriasObtenidas = data.categorias.map(categoria => categoria.nombre); // Obtener solo los nombres de categoría
         console.log(categoriasObtenidas);
@@ -93,27 +108,38 @@ class Page {
             alert('La categoría del producto no es válida.');
             return;
         }
-    
-    
-        // Si pasa todas las validaciones, puedes añadir el producto
-        // Aquí debes agregar el código para añadir el producto a tu base de datos o hacer cualquier otra operación necesaria
-        const newProduct = {
-            nombre:productName,
-            precio:productPrice,
-            codigo_barra:productBarcode,
-            categoria:productCategory,
-            img:productImg
-        };
-    
-        window.ipcRender.send('insertProducto', newProduct)
-    
-        // También puedes restablecer los campos del formulario después de añadir el producto
-        document.getElementById('productNameInput').value = '';
-        document.getElementById('productPriceInput').value = '';
-        document.getElementById('productBarcodeInput').value = '';
-        document.getElementById('productCategorySelect').value = '';
-        document.getElementById('productImageInput').value = '';
-        document.getElementById('productImagePreview').setAttribute('src', '');
+
+        data.productos.forEach((producto, index) => {
+            if (producto.codigo_barra == productBarcode) {
+                swal("Algo hiciste mal :(", "Este código de barras ya está registrado en la base de datos.", "error");
+                agregar = false;
+            }
+        });
+
+
+        if (agregar) {
+            // Si pasa todas las validaciones, puedes añadir el producto
+            // Aquí debes agregar el código para añadir el producto a tu base de datos o hacer cualquier otra operación necesaria
+            const newProduct = {
+                nombre: productName,
+                precio: productPrice,
+                codigo_barra: productBarcode,
+                categoria: productCategory,
+                img: productImg
+            };
+
+            window.ipcRender.send('insertProducto', newProduct)
+
+            // También puedes restablecer los campos del formulario después de añadir el producto
+            document.getElementById('productNameInput').value = '';
+            document.getElementById('productPriceInput').value = '';
+            document.getElementById('productBarcodeInput').value = '';
+            document.getElementById('productCategorySelect').value = '';
+            document.getElementById('productImageInput').value = '';
+            document.getElementById('productImagePreview').setAttribute('src', '');
+
+            swal('¡Exitoso! :D', 'Añadiste el producto con éxito', 'success')
+        }
     }
 }
 
@@ -125,6 +151,7 @@ async function buscarProducto() {
         const response = await fetch(url);
 
         if (!response.ok) {
+            swal("No encontramos información :(", "El producto no tiene información. Ingresalo manualmente...", "error");
             throw new Error(`La solicitud a ${url} falló con estado ${response.status}`);
         }
 
@@ -140,6 +167,7 @@ async function buscarProducto() {
             const productName = productNameElement.textContent.trim();
             document.getElementById('productNameInput').value = productName;
         } else {
+            swal("No encontramos información :(", "El producto no tiene información. Ingresalo manualmente", "error");
             throw new Error('No se encontró el elemento .product-name en la respuesta HTML');
         }
 
@@ -181,7 +209,7 @@ async function sinBuscar() {
     const productCategorySelect = document.getElementById('productCategorySelect');
     const productImageInput = document.getElementById('productImageInput');
 
-    if (buscar.textContent === 'Continuar con el escaneo') {
+    if (buscar.textContent === '-') {
         // Restaurar el estado para continuar con el escaneo
         barcodeInput.disabled = false;
         buscar.disabled = false;
@@ -194,7 +222,7 @@ async function sinBuscar() {
 
         // Restaurar el texto y el evento del botón
         buscar.textContent = 'Buscar Producto';
-        nobuscar.textContent = 'Continuar Sin Escanear'
+        nobuscar.textContent = 'Ingresar Manualmente'
         buscar.onclick = buscarProducto; // Restablecer el evento de búsqueda
     } else {
         // Deshabilitar la entrada de código de barras y el botón de búsqueda
@@ -209,8 +237,8 @@ async function sinBuscar() {
         productImageInput.disabled = false;
 
         // Cambiar el texto y el evento del botón para continuar con el escaneo
-        buscar.textContent = 'Continuar con el escaneo';
-        nobuscar.textContent = 'Continuar con Escanear'
+        buscar.textContent = '-';
+        nobuscar.textContent = 'Ingresar Automáticamente'
         buscar.onclick = sinBuscar;
     }
 }

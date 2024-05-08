@@ -16,8 +16,6 @@
   <!--Icons-->
   <script src="https://kit.fontawesome.com/a3c354fd86.js" crossorigin="anonymous"></script>
 
-  <!-- DataTabkes-->
-  <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css">
   <!--Alerts Customize-->
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
@@ -70,12 +68,51 @@
   <div class="container" id="main">
     <div class="row">
       <div class="col-md-12">
-        <h4 class="text-center">¡Bienvenido <span id="nombreUser"></span> a la gestión de tu Negocio!</h4>
+        <h4 class="text-center">Modifica el producto</h4>
       </div>
       <div class="col-md-12">
         <div class="container">
-          <h1 class="mt-4 mb-3">Últimas Ventas Registradas</h1>
-          <table id="ventas" class="display" width="100%"></table>
+          <div class="col-md-12 mx-auto d-flex flex-wrap justify-content-between">
+            <div class="col-md-4">
+              <fieldset>
+                <label class="form-label mt-4" for="productNameInput">Nombre del Producto</label>
+                <input class="form-control" id="productNameInput" placeholder="Nombre del Producto" type="text"
+                >
+              </fieldset>
+            </div>
+            <div class="col-md-4">
+              <fieldset>
+                <label class="form-label mt-4" for="productPriceInput">Precio del Producto</label>
+                <input class="form-control" id="productPriceInput" placeholder="Precio del Producto" type="text"
+                >
+              </fieldset>
+            </div>
+            <div class="col-md-4">
+              <fieldset>
+                <label class="form-label mt-4" for="productBarcodeInput">Código de Barras del Producto</label>
+                <input class="form-control" id="productBarcodeInput" placeholder="Código de Barras del Producto"
+                  type="text" disabled>
+              </fieldset>
+            </div>
+            <div class="col-md-4">
+              <fieldset>
+                <label class="form-label mt-4" for="productCategorySelect">Categoría del Producto</label>
+                <select class="form-select" id="productCategorySelect">
+                </select>
+              </fieldset>
+            </div>
+
+            <div class="col-md-4">
+              <fieldset>
+                <label class="form-label mt-4" for="productImageInput">Imagen del Producto</label><br>
+                <img class="img-fluid" id="productImagePreview" style="width: 150px; height: 150px;">
+                <input class="form-control" id="productImageInput" placeholder="URL de la Imagen del Producto"
+                  type="text">
+              </fieldset>
+            </div>
+          </div>
+
+          <button id="addProducto" type="button" class="btn btn-success">Guardar Producto</button>
         </div>
       </div>
     </div>
@@ -86,10 +123,8 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="https://cdn.datatables.net/2.0.5/js/dataTables.min.js"></script>
+  <script src="./js/modificarProducto.js"></script>
 
-  <!-- JS personales -->
-  <script src="./js/index.js"></script>
 </body>
 
 </html>
