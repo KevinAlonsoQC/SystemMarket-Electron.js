@@ -3,6 +3,8 @@ let data;
 let dataCarrito = [];
 let monto_total = 0;
 const barcodeInput = document.getElementById('barcodeInput');
+let formattedDateTime;
+let numeroBoletaActual;
 
 document.addEventListener('DOMContentLoaded', function () {
     page = new Page(window);
@@ -24,6 +26,12 @@ class Page {
         if (refreshButton) {
             refreshButton.addEventListener('click', this.refresh.bind(this));
         }
+
+        // Agrega un evento de clic al botón de actualización si tienes uno
+        const generar_boleta = this.get('#generar_boleta');
+        if (generar_boleta) {
+            generar_boleta.addEventListener('click', this.gBoleta.bind(this));
+        }
     }
 
     loadDataUser() {
@@ -36,11 +44,20 @@ class Page {
             if (result.permissions == 'admin') {
                 data = result
                 profileName.innerHTML = result.name;
-                if (result.ventas.length == 0) {
-                    nro_boleta.innerHTML = 1;
-                } else {
-                    nro_boleta.innerHTML = result.ventas.length + 1;
+
+                // Inicializa una variable para almacenar el ID más alto
+                let highestId = 0;
+                // Recorre result.ventas para encontrar el ID más alto
+                for (const venta of result.ventas) {
+                    highestId = venta.id
+                    console.log(venta.id)
                 }
+                // Calcula el número de boleta actual sumando 1 al ID más alto encontrado
+                numeroBoletaActual = highestId + 1;
+
+
+                nro_boleta.innerHTML = numeroBoletaActual
+
                 const now = new Date();
 
                 // Obtener horas, minutos, día, mes y año
@@ -51,7 +68,7 @@ class Page {
                 const year = now.getFullYear();
 
                 // Crear una cadena de fecha y hora en el formato deseado
-                const formattedDateTime = `${hours}:${minutes} ${day}/${month}/${year}`;
+                formattedDateTime = `${hours}:${minutes} ${day}/${month}/${year}`;
                 fecha.innerHTML = formattedDateTime;
             }
         });
@@ -98,6 +115,38 @@ class Page {
     refresh() {
         // Vuelve a cargar los datos del usuario
         this.loadDataUser();
+    }
+
+    gBoleta() {
+        if (dataCarrito.length > 0 ? dataCarrito.length : false) {
+
+            const boleta = {
+                fecha: formattedDateTime,
+                vendedor: data.name,
+                monto_total: monto_total,
+                detalles: dataCarrito
+            };
+            swal({
+                title: "¿Realizar venta?",
+                text: "Si aceptas, la venta será realizada y será emitida la boleta.",
+                icon: "success",
+                buttons: true,
+                dangerMode: true,
+                buttons: ["Generar Boleta", "Cancelar"],
+            }).then((willDelete) => {
+                if (willDelete) {
+                    swal("Continúa con la Boleta", {
+                        icon: "success",
+                    });
+                } else {
+                    window.ipcRender.send('generarBoleta', boleta);
+                    window.location.href = `index.html`;
+
+                }
+            });
+        } else {
+            swal('¿Qué haces?', 'No puedes emitir una boleta vacía', 'error')
+        }
     }
 
     logout() {

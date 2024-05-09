@@ -11,6 +11,7 @@ const ipc = {
             'deleteProducto',
             'saveCarrito',
             'deleteCarrito',
+            'generarBoleta',
         ],
         'sendReceive': [ //Esto me trae datos a mi HTML
             'getUserData',

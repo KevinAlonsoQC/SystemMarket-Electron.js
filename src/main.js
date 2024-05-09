@@ -88,69 +88,71 @@ electronIpcMain.on('login', (event, data) => {
   validateLogin(data);
 });
 
-// Consulta para obtener todos los datos de la tabla producto
+// Modifica las funciones de consulta para que devuelvan promesas que se resuelvan una vez que las consultas se completen y los datos se almacenen en el store
 function getProductos() {
-  const sql = 'SELECT * FROM producto';
+  return new Promise((resolve, reject) => {
+    const sql = 'SELECT * FROM producto';
 
-  db.query(sql, (error, results, fields) => {
-    if (error) {
-      console.log(error);
-      return;
-    }
+    db.query(sql, (error, results, fields) => {
+      if (error) {
+        reject(error);
+        return;
+      }
 
-    // Almacena los detalles de venta en un array
-    const Productos = results.map(detalle => ({
-      nombre: detalle.nombre,
-      precio: detalle.precio,
-      codigo_barra: detalle.codigo_barra,
-      categoria: detalle.categoria,
-      img: detalle.img
-    }));
+      const Productos = results.map(detalle => ({
+        nombre: detalle.nombre,
+        precio: detalle.precio,
+        codigo_barra: detalle.codigo_barra,
+        categoria: detalle.categoria,
+        img: detalle.img
+      }));
 
-    // Almacena el array de productos de venta en el store
-    store.set('productos', Productos);
+      store.set('productos', Productos);
+      resolve();
+    });
   });
 };
 
-// Consulta para obtener todos los datos de la tabla venta
 function getVentas() {
-  const sql = 'SELECT * FROM venta';
+  return new Promise((resolve, reject) => {
+    const sql = 'SELECT * FROM venta';
 
-  db.query(sql, (error, results, fields) => {
-    if (error) {
-      console.log(error);
-      return;
-    }
+    db.query(sql, (error, results, fields) => {
+      if (error) {
+        reject(error);
+        return;
+      }
 
-    // Almacena los detalles de venta en un array
-    const Ventas = results.map(detalle => ({
-      fecha: detalle.fecha,
-      vendedor: detalle.vendedor,
-      monto: detalle.monto_total
-    }));
+      const Ventas = results.map(detalle => ({
+        id: detalle.id,
+        fecha: detalle.fecha,
+        vendedor: detalle.vendedor,
+        monto: detalle.monto_total
+      }));
 
-    // Almacena el array de detalles de venta en el store
-    store.set('ventas', Ventas);
+      store.set('ventas', Ventas);
+      resolve();
+    });
   });
 };
 
-
-// Consulta para obtener todos los datos de la tabla detalle_venta
 function getCategorias() {
-  const sql = 'SELECT * FROM categoria';
+  return new Promise((resolve, reject) => {
+    const sql = 'SELECT * FROM categoria';
 
-  db.query(sql, (error, results, fields) => {
-    if (error) {
-      console.log(error);
-      return;
-    }
-    // Almacena los detalles de venta en un array
-    const Categorias = results.map(detalle => ({
-      nombre: detalle.nombre
-    }));
+    db.query(sql, (error, results, fields) => {
+      if (error) {
+        reject(error);
+        return;
+      }
 
-    // Almacena el array de productos de venta en el store
-    store.set('categorias', Categorias);
+      const Categorias = results.map(detalle => ({
+        nombre: detalle.nombre
+      }));
+
+      store.set('categorias', Categorias);
+      resolve();
+    });
   });
 };
 
@@ -197,21 +199,31 @@ function validateLogout(confirm) {
   }
 }
 
-electronIpcMain.handle('getUserData', (event) => {
-  getCategorias();
-  getProductos();
-  getVentas();
+// Modifica getUserData para que devuelva una promesa que se resuelve una vez que todas las consultas se completen
+electronIpcMain.handle('getUserData', async (event) => {
+  try {
+    const categoriasPromise = getCategorias();
+    const productosPromise = getProductos();
+    const ventasPromise = getVentas();
 
-  const data = {
-    name: store.get('name'),
-    email: store.get('email'),
-    permissions: store.get('permissions'),
-    //Anexos al usuario. Data
-    categorias: store.get('categorias'),
-    ventas: store.get('ventas'),
-    productos: store.get('productos'),
-  };
-  return data;
+    // Espera a que todas las consultas se completen y los datos se almacenen en el store
+    await Promise.all([categoriasPromise, productosPromise, ventasPromise]);
+
+    // Obtiene los datos del store y los devuelve
+    const data = {
+      name: store.get('name'),
+      email: store.get('email'),
+      permissions: store.get('permissions'),
+      categorias: store.get('categorias'),
+      ventas: store.get('ventas'),
+      productos: store.get('productos'),
+    };
+
+    return data;
+  } catch (error) {
+    console.error('Error al obtener los datos del usuario:', error);
+    throw error;
+  }
 });
 
 electronIpcMain.on('saveCarrito', (event, data) => {
@@ -226,7 +238,6 @@ electronIpcMain.on('saveCarrito', (event, data) => {
 electronIpcMain.on('deleteCarrito', (event, data) => {
   console.log('Carrito borrado')
   store.delete('carrito');
-  console.log(store.get('carrito'))
 });
 
 electronIpcMain.handle('getCarrito', (event) => {
@@ -236,6 +247,44 @@ electronIpcMain.handle('getCarrito', (event) => {
   console.log('Carrito llamado', data.carrito)
   return data;
 });
+
+electronIpcMain.on('generarBoleta', (event, data) => {
+  addBoleta(data);
+});
+
+function convertirFecha(fecha) {
+  // Dividir la fecha en horas y fecha
+  const partes = fecha.split(' ');
+  const hora = partes[0];
+  const fechaParte = partes[1];
+
+  // Dividir la fecha en día, mes y año
+  const fechaPartes = fechaParte.split('/');
+  const dia = fechaPartes[0];
+  const mes = fechaPartes[1];
+  const año = fechaPartes[2];
+
+  // Formatear la fecha como 'YYYY-MM-DD HH:MM:SS'
+  const fechaFormateada = `${año}-${mes}-${dia} ${hora}:00`;
+
+  return fechaFormateada;
+}
+
+function addBoleta(data) {
+  console.log('Datos insertados (boleta)')
+  const detallesJSON = JSON.stringify(data.detalles);
+  const fechaFormateada = convertirFecha(data.fecha);
+  const sql = 'INSERT INTO venta (fecha, vendedor, monto_total, detalles) VALUES (?, ?, ?, ?)';
+  db.query(sql, [fechaFormateada, data.vendedor, data.monto_total, detallesJSON], (error) => {
+    if (error) {
+      console.log(error);
+    }else{
+      console.log('agregado la boleta', data)
+      console.log('carrito borrado por boleta', data)
+      store.delete('carrito');
+    }
+  });
+};
 
 electronIpcMain.on('insertProducto', (event, data) => {
   addProducto(data);
