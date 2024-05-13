@@ -12,10 +12,12 @@ const ipc = {
             'saveCarrito',
             'deleteCarrito',
             'generarBoleta',
+            'viewBoleta',
         ],
         'sendReceive': [ //Esto me trae datos a mi HTML
             'getUserData',
             'getCarrito',
+            'getBoleta',
         ]
     }
 };

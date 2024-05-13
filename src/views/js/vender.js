@@ -76,7 +76,7 @@ class Page {
         window.ipcRender.invoke('getCarrito').then((result) => {
             if (result.carrito.length > 0) {
                 const productos_boleta = this.get('#productos_boleta');
-                const monto_boleta = this.get('#monto_total');
+                const monto_boleta = this.get('#monto_boleta');
 
                 dataCarrito = result.carrito
                 productos_boleta.innerHTML = '';
@@ -192,7 +192,7 @@ barcodeInput.addEventListener('keypress', function (event) {
 });
 
 async function buscarProducto(inputValue) {
-    const monto_boleta = document.getElementById('monto_total');
+    const monto_boleta = document.getElementById('monto_boleta');
     const tbody = document.getElementById('productos_boleta');
     const barcode = inputValue;
     const scannedProduct = data.productos.find(producto => producto.codigo_barra === barcode);
@@ -226,7 +226,12 @@ async function buscarProducto(inputValue) {
         // Limpiar el input después de agregar el producto
         barcodeInput.value = '';
         monto_total = monto_total + scannedProduct.precio;
-        monto_boleta.innerHTML = monto_total;
+        // Formatear el monto con separador de miles y símbolo de moneda
+        const monto_Formateado = new Intl.NumberFormat('es-ES', {
+            style: 'currency',
+            currency: 'CLP'
+        }).format(monto_total);
+        monto_boleta.innerHTML = monto_Formateado;
     } else {
         await swal({
             title: "El producto escaneado no fue encontrado :(",

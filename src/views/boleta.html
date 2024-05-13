@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Productos</title>
+
+    <!--Styles and Bootstrap-->
+    <link rel="stylesheet" href="https://bootswatch.com/5/solar/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <!--Jquery-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!--Icons-->
+    <script src="https://kit.fontawesome.com/a3c354fd86.js" crossorigin="anonymous"></script>
+
+    <!-- DataTabkes-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css">
+    <!--Alerts Customize-->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+</head>
+
+<body style="background-color: #fff; color: #000;">
+    <table class="mx-auto" width="200px" border="0" style="background-color: #fff; color: #000;">
+        <tbody>
+            <tr>
+                <td colspan="4" align="center">
+                    <strong>MINIMARKET SA.</strong><br />
+                    AV. EJEMPLOS #100<br />
+                    SANTIAGO, REGIÓN METROPOLITANA, CHILE<br />
+                    R.U.T. EMPRESA: 99.999.999-9<br />
+                </td>
+            </tr>
+            <tr>
+                <td align="left"><br/><br/><strong>NRO BBOLETA: </strong> <span id="nro_boleta"></span></td>
+            </tr>
+            <tr>
+                <td><strong>FECHA :</strong></td>
+                <td width="500px" align="left"><span id="fecha"></span></td>
+
+            </tr>
+            <tr>
+                <td width="100px" align="left"><strong>VENDEDOR:</strong></td>
+                <td width="500px" align="left"><span id="vendedor"></span></td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <br /><strong>DETALLE:</strong><br />===============================================
+                </td>
+            </tr>
+            <tr>
+                <td width="300px" align="left"><br />Producto</td>
+                <td width="100px"><br/>Precio Unit.</td>
+            </tr>
+            <tbody id="productos_boleta"></tbody>
+            <tr>
+                <td colspan="4">
+                    ---------------------------------------------------------------------------
+                </td>
+            </tr>
+            <tr>
+                <td width="500px" align="left">Total:&nbsp;</td>
+                <td width="100px" align="left"> <span id="monto_boleta"></span> </td>
+            </tr>
+            <tr>
+                <td colspan="4">===============================================</td>
+            </tr>
+            <tr>
+                <td colspan="4" align="center"><br /><br />GRACIAS POR SU CONSUMO!<br />LO ESPERAMOS DE VUELTA</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.5/js/dataTables.min.js"></script>
+
+    <!-- JS personales -->
+    <script src="./js/boleta.js"></script>
+</body>
+
+</html>

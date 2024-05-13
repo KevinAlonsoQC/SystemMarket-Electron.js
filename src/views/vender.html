@@ -82,26 +82,56 @@
                     </div>
                     <button type="button" class="btn btn-outline-primary">Generar Boleta</button>
                     <br><br>
-                    <div class="col-md-5 mx-auto d-flex flex-wrap" style="background-color: #fff; color: black; margin-bottom: 50px;">
-                        <p class="ms-3 p-1">Vendedor: <span id="vendedor"></span> </p>
-                        <p class="ms-3 p-1">Fecha: <span id="fecha"></span> </p>
-                        <p class="ms-3 p-1">Nro. Boleta: <span id="nro_boleta"></span> </p>
-                        <br>
-                        
-                        <table id="boleta" class="text-center display" width="100%" style="background-color: #dadada;">
-                            <thead>
-                                <tr>
-                                    <th>Producto</th>
-                                    <th>Precio</th>
-                                </tr>
-                            </thead>
-                            <tbody id="productos_boleta">
-
-                            </tbody>
-                        </table>
-
-                        <p class="ms-3 p-1" style="margin-top: 50px;">Monto Total: <span id="monto_total"></span> </p>
-                    </div>
+                    <table class="mx-auto" width="200px" border="0" style="background-color: #fff; color: #000;">
+                        <tbody>
+                            <tr>
+                                <td colspan="4" align="center">
+                                    <strong>MINIMARKET SA.</strong><br />
+                                    AV. EJEMPLOS #100<br />
+                                    SANTIAGO, REGIÓN METROPOLITANA, CHILE<br />
+                                    R.U.T. EMPRESA: 99.999.999-9<br />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left"><br/><br/><strong>NRO BBOLETA: </strong> <span id="nro_boleta"></span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>FECHA :</strong></td>
+                                <td width="500px" align="left"><span id="fecha"></span></td>
+                
+                            </tr>
+                            <tr>
+                                <td width="100px" align="left"><strong>VENDEDOR:</strong></td>
+                                <td width="500px" align="left"><span id="vendedor"></span></td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <br /><strong>DETALLE:</strong><br />===============================================
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="300px" align="left"><br />Producto</td>
+                                <td width="100px"><br/>Precio Unit.</td>
+                            </tr>
+                            <tbody id="productos_boleta"></tbody>
+                            <tr>
+                                <td colspan="4">
+                                    ---------------------------------------------------------------------------
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="500px" align="left">Total:&nbsp;</td>
+                                <td width="100px" align="left"> <span id="monto_boleta"></span> </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">===============================================</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" align="center"><br /><br />GRACIAS POR SU CONSUMO!<br />LO ESPERAMOS DE VUELTA</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br><br>
                     <button id="generar_boleta" type="button" class="btn btn-outline-primary">Generar Boleta</button>
                     <br><br><br>
                 </div>
